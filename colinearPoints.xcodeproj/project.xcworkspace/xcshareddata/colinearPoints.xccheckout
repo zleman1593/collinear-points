@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9E22989B-9149-482A-A817-3F05FBBA549F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>colinearPoints</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>028B81E83EF3FD2225DA3B349F2D03AA6B475B85</key>
+		<string>https://github.com/zleman1593/collinear-points.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>colinearPoints.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>028B81E83EF3FD2225DA3B349F2D03AA6B475B85</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/zleman1593/collinear-points.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>028B81E83EF3FD2225DA3B349F2D03AA6B475B85</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>028B81E83EF3FD2225DA3B349F2D03AA6B475B85</string>
+			<key>IDESourceControlWCCName</key>
+			<string>collinear-points</string>
+		</dict>
+	</array>
+</dict>
+</plist>
