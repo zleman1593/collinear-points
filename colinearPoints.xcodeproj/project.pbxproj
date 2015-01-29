@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A20C1B901A7AEE00007BE2E8 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A20C1B8F1A7AEE00007BE2E8 /* main.c */; };
+		A20C1BA01A7AEE57007BE2E8 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = A20C1B961A7AEE57007BE2E8 /* geom.c */; };
+		A20C1BA11A7AEE57007BE2E8 /* geom.o in Frameworks */ = {isa = PBXBuildFile; fileRef = A20C1B981A7AEE57007BE2E8 /* geom.o */; };
+		A20C1BA21A7AEE57007BE2E8 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = A20C1B991A7AEE57007BE2E8 /* Makefile */; };
+		A20C1BA31A7AEE57007BE2E8 /* rtimer.c in Sources */ = {isa = PBXBuildFile; fileRef = A20C1B9A1A7AEE57007BE2E8 /* rtimer.c */; };
+		A20C1BA41A7AEE57007BE2E8 /* rtimer.o in Frameworks */ = {isa = PBXBuildFile; fileRef = A20C1B9C1A7AEE57007BE2E8 /* rtimer.o */; };
+		A20C1BA51A7AEE57007BE2E8 /* viewPoints.c in Sources */ = {isa = PBXBuildFile; fileRef = A20C1B9E1A7AEE57007BE2E8 /* viewPoints.c */; };
+		A20C1BA61A7AEE57007BE2E8 /* viewPoints.o in Frameworks */ = {isa = PBXBuildFile; fileRef = A20C1B9F1A7AEE57007BE2E8 /* viewPoints.o */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +30,16 @@
 
 /* Begin PBXFileReference section */
 		A20C1B8C1A7AEE00007BE2E8 /* colinearPoints */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = colinearPoints; sourceTree = BUILT_PRODUCTS_DIR; };
-		A20C1B8F1A7AEE00007BE2E8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A20C1B961A7AEE57007BE2E8 /* geom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = geom.c; sourceTree = SOURCE_ROOT; };
+		A20C1B971A7AEE57007BE2E8 /* geom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geom.h; sourceTree = SOURCE_ROOT; };
+		A20C1B981A7AEE57007BE2E8 /* geom.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = geom.o; sourceTree = SOURCE_ROOT; };
+		A20C1B991A7AEE57007BE2E8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
+		A20C1B9A1A7AEE57007BE2E8 /* rtimer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtimer.c; sourceTree = SOURCE_ROOT; };
+		A20C1B9B1A7AEE57007BE2E8 /* rtimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtimer.h; sourceTree = SOURCE_ROOT; };
+		A20C1B9C1A7AEE57007BE2E8 /* rtimer.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = rtimer.o; sourceTree = SOURCE_ROOT; };
+		A20C1B9D1A7AEE57007BE2E8 /* viewPoints */ = {isa = PBXFileReference; lastKnownFileType = file; path = viewPoints; sourceTree = SOURCE_ROOT; };
+		A20C1B9E1A7AEE57007BE2E8 /* viewPoints.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = viewPoints.c; sourceTree = SOURCE_ROOT; };
+		A20C1B9F1A7AEE57007BE2E8 /* viewPoints.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = viewPoints.o; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +47,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A20C1BA41A7AEE57007BE2E8 /* rtimer.o in Frameworks */,
+				A20C1BA11A7AEE57007BE2E8 /* geom.o in Frameworks */,
+				A20C1BA61A7AEE57007BE2E8 /* viewPoints.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,7 +75,16 @@
 		A20C1B8E1A7AEE00007BE2E8 /* colinearPoints */ = {
 			isa = PBXGroup;
 			children = (
-				A20C1B8F1A7AEE00007BE2E8 /* main.c */,
+				A20C1B961A7AEE57007BE2E8 /* geom.c */,
+				A20C1B971A7AEE57007BE2E8 /* geom.h */,
+				A20C1B981A7AEE57007BE2E8 /* geom.o */,
+				A20C1B991A7AEE57007BE2E8 /* Makefile */,
+				A20C1B9A1A7AEE57007BE2E8 /* rtimer.c */,
+				A20C1B9B1A7AEE57007BE2E8 /* rtimer.h */,
+				A20C1B9C1A7AEE57007BE2E8 /* rtimer.o */,
+				A20C1B9D1A7AEE57007BE2E8 /* viewPoints */,
+				A20C1B9E1A7AEE57007BE2E8 /* viewPoints.c */,
+				A20C1B9F1A7AEE57007BE2E8 /* viewPoints.o */,
 			);
 			path = colinearPoints;
 			sourceTree = "<group>";
@@ -118,7 +145,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A20C1B901A7AEE00007BE2E8 /* main.c in Sources */,
+				A20C1BA31A7AEE57007BE2E8 /* rtimer.c in Sources */,
+				A20C1BA21A7AEE57007BE2E8 /* Makefile in Sources */,
+				A20C1BA51A7AEE57007BE2E8 /* viewPoints.c in Sources */,
+				A20C1BA01A7AEE57007BE2E8 /* geom.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +262,7 @@
 				A20C1B951A7AEE00007BE2E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
