@@ -3,6 +3,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*Quick sort functions*/
+void swap_r(int r[], int a, int b)
+{
+    int temp = r[a];
+    r[a] = r[b];
+    r[b] = temp;
+}
+
+void quick(int r[], int start, int end)
+{
+    if(end > start)
+    {
+        int pivot_index = (start + end) / 2;
+        int pivot = r[pivot_index];
+        int chg, i;
+        
+        swap_r(r, pivot_index, end);
+        
+        for(i = chg = start; i < end; i++)
+        {
+            if(r[i] < pivot)
+            {
+                swap_r(r, i, chg);
+                chg++;
+            }
+        }
+        
+        swap_r(r, chg, end);
+        
+        quick(r, start, chg - 1);
+        quick(r, chg + 1, end);
+    }
+}
+
+
 
 /* **************************************** */
 /* returns the signed area of triangle abc. The area is positive if c
@@ -35,7 +70,10 @@ int left (point2D a, point2D b, point2D c) {
  straightforward algorithm that runs in cubic time
  */
 void find_collinear_straightforward(point2D* p, int n) {
-
+    assert(p);
+    int ncol=0; //nb distinct  collinear triplets
+    
+    
     
     /*
     printf("(%i,%i,)\n",p[74].x,p[74].y);
@@ -89,10 +127,7 @@ void find_collinear_straightforward(point2D* p, int n) {
     
     
     
-    assert(p);
-    int ncol=0; //nb distinct  collinear triplets
-    
-    
+
     
     
     
@@ -125,9 +160,33 @@ void find_collinear_improved(point2D* p, int n) {
     assert(p);
     int ncol=0; //nb distinct collinear triplets
     
-    //.....
+
+    for (int i = 0; i < n; i++){
+        
+        
+     
+            int r[] = {9, 12, 3, 4, 1, -2, -4, 199, 413};
+            
+            int size_index = sizeof(r) / sizeof(int) - 1;
+            /*Sort Array of  Slopes*/
+            quick(r, 0, size_index);
+
+        
+
+        
+        
+    }
+    
+    
+    
+    
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
     fflush(stdout);
 }
+
+
+
+
+
 
