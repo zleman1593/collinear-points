@@ -37,14 +37,11 @@ int left (point2D a, point2D b, point2D c) {
 void find_collinear_straightforward(point2D* p, int n) {
 
     
-      printf("(%i,%i,)\n",p[0].x,p[0].y);
-    printf("(%i,%i,)\n",p[7].x,p[7].y);
-    printf("(%i,%i,)\n",p[374].x,p[374].y);
-    
-    printf("(%i,%i,)\n",p[0].x,p[0].y);
-    printf("(%i,%i,)\n",p[51].x,p[51].y);
-    printf("(%i,%i,)\n",p[154].x,p[154].y);
-    
+    /*
+    printf("(%i,%i,)\n",p[74].x,p[74].y);
+    printf("(%i,%i,)\n",p[306].x,p[306].y);
+    printf("(%i,%i,)\n",p[383].x,p[383].y);
+    */
     for (int i = 0; i < n; i++){
         for (int j = i+1; j < n; j++){
             //Make sure first two points are not identical
@@ -61,7 +58,7 @@ void find_collinear_straightforward(point2D* p, int n) {
 
                             
                             //Check to see if third point is colinear with line segement of first two points
-                            if(  (( (slope*p[k].x) +  yIntercept)  -  p[k].y ) == 0){
+                            if(  (( (slope*(double)p[k].x) +  yIntercept)  -  (double)p[k].y ) == 0){
                                 printf("Points: %i, %i, %i\n",i,j,k);
                                 
                             }
