@@ -6,6 +6,12 @@ typedef struct _point2d {
   int x,y; 
 } point2D;
 
+ typedef struct _lnSegment {
+     point2D first, second;
+     double slope;
+ } lnSegment;
+
+
 
 
 /* returns the signed area of triangle abc. The area is positive if c

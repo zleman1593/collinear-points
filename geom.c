@@ -8,7 +8,11 @@
 
 int cmpfunc (const void * a, const void * b)
 {
-    return ( *(int*)a - *(int*)b );
+    /*Type cast*/
+    lnSegment * x = (lnSegment*) a;
+    lnSegment * y = (lnSegment*) b;
+    
+    return ( x->slope - y->slope );
 }
 
 
