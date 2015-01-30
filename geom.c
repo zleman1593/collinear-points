@@ -54,10 +54,10 @@ void find_collinear_straightforward(point2D* p, int n) {
     
     
     /*
-    printf("(%i,%i,)\n",p[74].x,p[74].y);
-    printf("(%i,%i,)\n",p[306].x,p[306].y);
-    printf("(%i,%i,)\n",p[383].x,p[383].y);
-    */
+     printf("(%i,%i,)\n",p[74].x,p[74].y);
+     printf("(%i,%i,)\n",p[306].x,p[306].y);
+     printf("(%i,%i,)\n",p[383].x,p[383].y);
+     */
     for (int i = 0; i < n; i++){
         for (int j = i+1; j < n; j++){
             //Make sure first two points are not identical
@@ -71,7 +71,7 @@ void find_collinear_straightforward(point2D* p, int n) {
                     
                     for (int k = j+1; k < n; k++){
                         if((k != j)  && (k != i)){
-
+                            
                             
                             //Check to see if third point is colinear with line segement of first two points
                             if(  (( (slope*(double)p[k].x) +  yIntercept)  -  (double)p[k].y ) == 0){
@@ -105,7 +105,7 @@ void find_collinear_straightforward(point2D* p, int n) {
     
     
     
-
+    
     
     
     
@@ -138,33 +138,36 @@ void find_collinear_improved(point2D* p, int n) {
     assert(p);
     int ncol=0; //nb distinct collinear triplets
     
-
+//Create a lnSegment array
+    
     for (int i = 0; i < n; i++){
-        /*Get all possible line segments with i in them*/
+        
+        /*Get all possible line segments with point i in them*/
         for (int j = i+1; j < n; j++){
+            
             double slope = 0;
             double denominator = (p[j].x - p[i].x );
+            
             if (denominator != 0) {
                 slope = ((double) p[j].y - (double)p[i].y)/(denominator);
-                
             }else{
+                //Slope is undefined so set to max double value
                 slope = DBL_MAX;
             }
-     
+            
+            //Create struct lnSegment with two points (i and j) and current slope and add lnSegment to array
         }
-
-         /*Sort Array by Slopes*/
-    
         
-        //int size_index = sizeof(r) / sizeof(int) - 1;
-       
-
-         qsort(values, 5, sizeof(int), cmpfunc); //Define  cmpfunc above
-
+        
+        
+        /*Sort Array by Slopes*/
+        
+        qsort(/*array of lnSegment*/, /*number of elements in array*/, sizeof(/*one element*/), cmpfunc); //Define  cmpfunc above
+        
         /*Iterate over array and see if elements that have the same slope share a point*/
         for (<#initialization#>; <#condition#>; <#increment#>) {
             if (<#condition#>) {
-                 //printf("Points: %i, %i, %i\n",i,j,k);
+                //printf("Points: %i, %i, %i\n",i,j,k);
             }
         }
     }
