@@ -1,41 +1,14 @@
 #include "geom.h"
-#include <limits.h>
+#include <float.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 /*Quick sort functions*/
-void swap_r(int r[], int a, int b)
-{
-    int temp = r[a];
-    r[a] = r[b];
-    r[b] = temp;
-}
 
-void quick(int r[], int start, int end)
+int cmpfunc (const void * a, const void * b)
 {
-    if(end > start)
-    {
-        int pivot_index = (start + end) / 2;
-        int pivot = r[pivot_index];
-        int chg, i;
-        
-        swap_r(r, pivot_index, end);
-        
-        for(i = chg = start; i < end; i++)
-        {
-            if(r[i] < pivot)
-            {
-                swap_r(r, i, chg);
-                chg++;
-            }
-        }
-        
-        swap_r(r, chg, end);
-        
-        quick(r, start, chg - 1);
-        quick(r, chg + 1, end);
-    }
+    return ( *(int*)a - *(int*)b );
 }
 
 
@@ -177,11 +150,12 @@ void find_collinear_improved(point2D* p, int n) {
         }
 
          /*Sort Array by Slopes*/
-        int r[] = {9, 12, 3, 4, 1, -2, -4, 199, 413};
+    
         
-        int size_index = sizeof(r) / sizeof(int) - 1;
+        //int size_index = sizeof(r) / sizeof(int) - 1;
        
-        quick(r, 0, size_index);
+
+         qsort(values, 5, sizeof(int), cmpfunc); //Define  cmpfunc above
 
         /*Iterate over array and see if elements that have the same slope share a point*/
         for (<#initialization#>; <#condition#>; <#increment#>) {
