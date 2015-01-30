@@ -35,23 +35,30 @@ int left (point2D a, point2D b, point2D c) {
  straightforward algorithm that runs in cubic time
  */
 void find_collinear_straightforward(point2D* p, int n) {
+
     
+      printf("(%i,%i,)\n",p[0].x,p[0].y);
+    printf("(%i,%i,)\n",p[7].x,p[7].y);
+    printf("(%i,%i,)\n",p[374].x,p[374].y);
+    
+    printf("(%i,%i,)\n",p[0].x,p[0].y);
+    printf("(%i,%i,)\n",p[51].x,p[51].y);
+    printf("(%i,%i,)\n",p[154].x,p[154].y);
     
     for (int i = 0; i < n; i++){
-        
         for (int j = i+1; j < n; j++){
             //Make sure first two points are not identical
             if(i != j){
-                double slope=0;
+                double slope = 0;
                 double denominator = (p[j].x - p[i].x );
                 if (denominator != 0) {
-                    slope = ( p[j].y - p[i].y)/(denominator);
-        
-                    int  yIntercept =   p[i].y - (slope*p[i].x);
-   
+                    slope = ((double) p[j].y - (double)p[i].y)/(denominator);
+                    
+                    double  yIntercept =   (double)p[i].y - (slope*(double)p[i].x);
+                    
                     for (int k = j+1; k < n; k++){
                         if((k != j)  && (k != i)){
-                            //Make sure double int conversion is not causing errors
+
                             
                             //Check to see if third point is colinear with line segement of first two points
                             if(  (( (slope*p[k].x) +  yIntercept)  -  p[k].y ) == 0){
@@ -61,72 +68,69 @@ void find_collinear_straightforward(point2D* p, int n) {
                         }
                     }
                     
-                    
-                    
                 } else {
-                   // printf("Vertical: Undefined slope");
+                    // printf("Vertical: Undefined slope");
                     for (int k = j+1; k < n; k++){
                         if((k != j)  && (k != i)){
-                    /*Check if point k has a shared x coordinate with one of the other two points*/
-                    if (p[i].x == p[k].x) {
-                         printf("Vertical line segment. Points: %i, %i, %i \n",i,j,k);
-                    }
+                            /*Check if point k has a shared x coordinate with one of the other two points*/
+                            if (p[i].x == p[k].x) {
+                                printf("Vertical line segment. Points: %i, %i, %i \n",i,j,k);
+                            }
                         }
                     }
                     
-            
+                    
                 }
                 
-
+                
                 
             }
-            
             
         }
     }
     
-        
-        
-        
+    
+    
+    
     assert(p);
     int ncol=0; //nb distinct  collinear triplets
     
-        
-        
-        
-        
-        
-        
-        
-        
-        printf("find_collinear_straightforward: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
-        fflush(stdout);
-    }
     
     
     
     
-    int vertical (point2D a, point2D b) {
-        
-        if (a.x == b.x) return 1;
-        return 0;
-    }
     
     
-    /* **************************************** */
-    /* return all triplets of colinear points as an array using the
-     improved algorithm that runs in O(n^2 lg n) time
-     
-     
-     */
-    void find_collinear_improved(point2D* p, int n) {
-        
-        assert(p);
-        int ncol=0; //nb distinct collinear triplets
-        
-        //.....
-        
-        printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
-        fflush(stdout); 
-    }
     
+    
+    printf("find_collinear_straightforward: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
+    fflush(stdout);
+}
+
+
+
+
+int vertical (point2D a, point2D b) {
+    
+    if (a.x == b.x) return 1;
+    return 0;
+}
+
+
+/* **************************************** */
+/* return all triplets of colinear points as an array using the
+ improved algorithm that runs in O(n^2 lg n) time
+ 
+ 
+ */
+void find_collinear_improved(point2D* p, int n) {
+    
+    assert(p);
+    int ncol=0; //nb distinct collinear triplets
+    
+    //.....
+    
+    printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
+    fflush(stdout);
+}
+
