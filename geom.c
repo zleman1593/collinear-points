@@ -1,4 +1,5 @@
 #include "geom.h"
+#include <limits.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -162,19 +163,32 @@ void find_collinear_improved(point2D* p, int n) {
     
 
     for (int i = 0; i < n; i++){
-        
-        
+        /*Get all possible line segments with i in them*/
+        for (int j = i+1; j < n; j++){
+            double slope = 0;
+            double denominator = (p[j].x - p[i].x );
+            if (denominator != 0) {
+                slope = ((double) p[j].y - (double)p[i].y)/(denominator);
+                
+            }else{
+                slope = DBL_MAX;
+            }
      
-            int r[] = {9, 12, 3, 4, 1, -2, -4, 199, 413};
-            
-            int size_index = sizeof(r) / sizeof(int) - 1;
-            /*Sort Array of  Slopes*/
-            quick(r, 0, size_index);
+        }
 
+         /*Sort Array by Slopes*/
+        int r[] = {9, 12, 3, 4, 1, -2, -4, 199, 413};
         
+        int size_index = sizeof(r) / sizeof(int) - 1;
+       
+        quick(r, 0, size_index);
 
-        
-        
+        /*Iterate over array and see if elements that have the same slope share a point*/
+        for (<#initialization#>; <#condition#>; <#increment#>) {
+            if (<#condition#>) {
+                 //printf("Points: %i, %i, %i\n",i,j,k);
+            }
+        }
     }
     
     
