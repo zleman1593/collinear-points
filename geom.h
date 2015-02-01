@@ -27,6 +27,11 @@ int collinear(point2D p, point2D q, point2D r);
 /* return 1 if c is  strictly left of ab; 0 otherwise */
 int left (point2D a, point2D b, point2D c); 
 
+/* calculates the slope returns DBL_MAX if the slope is vertical */
+double calc_slope(double x1, double y1, double x2, double y2);
+
+/* calculates the y-intercept */
+double calc_y_intercept(double x, double y, double slope);
 
 /* return all triplets of colinear points as an array using the
    straightforward algorithm that runs in cubic time 
