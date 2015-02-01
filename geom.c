@@ -58,7 +58,7 @@ int is_colinear(double x, double y, double slope, double y_intercept) {
 void find_collinear_straightforward(point2D* p, int n) {
     assert(p);
     int ncol = 0; //nb distinct  collinear triplets
-
+    
     for (int i = 0; i < n; i++) {
         point2D p1 = p[i];
         
@@ -112,7 +112,7 @@ int vertical(point2D a, point2D b) {
 }
 
 /* Returns the slope
-   Returns DBL_MAX if the slope is vertical
+ Returns DBL_MAX if the slope is vertical
  */
 double calc_slope(double x1, double y1, double x2, double y2) {
     double denominator = x1 - x2;
@@ -122,7 +122,7 @@ double calc_slope(double x1, double y1, double x2, double y2) {
     return DBL_MAX;
 }
 
-/* Reutrns the y-intercept
+/* Returns the y-intercept
  */
 double calc_y_intercept(double x, double y, double slope) {
     return y - (slope * x);
@@ -132,19 +132,19 @@ double calc_y_intercept(double x, double y, double slope) {
  */
 int share_point(struct LnSegment l1, struct LnSegment l2) {
     return (l1.x1 == l2.x1 && l1.y1 == l2.y1) ||
-           (l1.x1 == l2.x2 && l1.y1 == l2.y2) ||
-           (l1.x2 == l2.x1 && l1.y2 == l2.y1) ||
-           (l1.x2 == l2.x2 && l1.y2 == l2.y2);
+    (l1.x1 == l2.x2 && l1.y1 == l2.y2) ||
+    (l1.x2 == l2.x1 && l1.y2 == l2.y1) ||
+    (l1.x2 == l2.x2 && l1.y2 == l2.y2);
 }
 
 /* **************************************** */
 /* return all triplets of colinear points as an array using the
- improved algorithm that runs in O(n^2 lg n) time and O(n) memory 
+ improved algorithm that runs in O(n^2 lg n) time and O(n) memory
  */
 void find_collinear_improved(point2D* p, int n) {
     assert(p);
     int ncol = 0; //nb distinct collinear triplets
-
+    
     for (int i = 0; i < n; i++) {
         point2D p1 = p[i];
         
@@ -174,10 +174,15 @@ void find_collinear_improved(point2D* p, int n) {
         // Iterate over array and see if elements that have the same slope share a point
         for (int i = 0; i < n - 1; i++) {
             struct LnSegment ln1 = lines[i];
-            struct LnSegment ln2 = lines[i + 1];
-            if (ln1.slope == ln2.slope && share_point(ln1, ln2)) {
-                ncol++;
-//                printf("Points: %i, %i, %i\n", i, j, k);
+            struct LnSegment ln2 = lines[i+1];
+            
+            for (int j = i + 1; (ln1.slope == ln2.slope) && j < n; j++) {//Check this j<n**************************
+                struct LnSegment ln2 = lines[j];
+                
+                if (ln1.slope == ln2.slope && share_point(ln1, ln2)) {
+                    ncol++;
+                    //                printf("Points: %i, %i, %i\n", i, j, k);
+                }
             }
         }
     }
