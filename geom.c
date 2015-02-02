@@ -187,7 +187,7 @@ void find_collinear_improved(point2D* p, int n) {
                 ncol++;
                 /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
                 printf("Points #: %i,%i,%i, %i\n", ln1.pointA, ln1.pointB, ln2.pointA,ln2.pointB);
-                printf("Points coordinates: (%i,%i);(%i,%i); (%i,%i); (%i,%i);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
+                printf("Points coordinates: (%f,%f);(%f,%f); (%f,%f); (%f,%f);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
             }
         }
         
