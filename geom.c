@@ -11,6 +11,8 @@ struct LnSegment {
     double y1;
     double x2;
     double y2;
+    int pointA;
+    int pointB;
 };
 
 /*Quick sort functions*/
@@ -163,6 +165,8 @@ void find_collinear_improved(point2D* p, int n) {
                 line.y1 = p1.y;
                 line.x2 = p2.x;
                 line.y2 = p2.y;
+                line.pointA = i;
+                line.pointB = j;
                 // Add lnSegment to array
                 lines[j - 1] = line;
             }
@@ -181,7 +185,7 @@ void find_collinear_improved(point2D* p, int n) {
                 ln2 = lines[j];
                 j++;
                 ncol++;
-                //printf("Points: %i, %i, %i\n", i, j, k);
+                printf("Points: %i,%i,%i, %i\n", ln1.pointA, ln1.pointB, ln2.pointA,ln2.pointB);
             }
         }
         
