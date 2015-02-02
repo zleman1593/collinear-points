@@ -152,7 +152,7 @@ void find_collinear_improved(point2D* p, int n) {
         
         //Create a lnSegment array for the current point
         struct LnSegment lines[n];
-        
+    
         // Get all possible line segments with point i in them
         for (int j = i + 1; j < n; j++) {
             point2D p2 = p[j];
@@ -186,7 +186,8 @@ void find_collinear_improved(point2D* p, int n) {
                 j++;
                 ncol++;
                 /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
-                printf("Points: %i,%i,%i, %i\n", ln1.pointA, ln1.pointB, ln2.pointA,ln2.pointB);
+                printf("Points #: %i,%i,%i, %i\n", ln1.pointA, ln1.pointB, ln2.pointA,ln2.pointB);
+                printf("Points coordinates: (%i,%i);(%i,%i); (%i,%i); (%i,%i);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
             }
         }
         
