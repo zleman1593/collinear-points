@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 //    printf("usage: viewPoints <nbPoints>\n");
 //    exit(1); 
 //  }
-    n = 50;//= atoi(argv[1]);
+    n = 200;//= atoi(argv[1]);
   printf("you entered n=%d\n", n);
   assert(n >0); 
 
@@ -105,7 +105,7 @@ int main(int argc, char** argv) {
 
   Rtimer rt2; 
   rt_start(rt2); 
-  find_collinear_improved(points,n); 
+  find_collinear_improved(points,n);
   rt_stop(rt2); 
   rt_sprint(buf,rt2);
   printf("finding all triplets of collinear points, n=%d, improved algo:  %s\n\n", n, buf);
