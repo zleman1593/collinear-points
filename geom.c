@@ -175,16 +175,15 @@ void find_collinear_improved(point2D* p, int n) {
         for (int i = 0; i < n - 1; i++) {
             struct LnSegment ln1 = lines[i];
             struct LnSegment ln2 = lines[i+1];
-            
-            for (int j = i + 1; (ln1.slope == ln2.slope) && j < n; j++) {//Check this j<n**************************
-                struct LnSegment ln2 = lines[j];
-                
-                if (ln1.slope == ln2.slope && share_point(ln1, ln2)) {
-                    ncol++;
-                    //                printf("Points: %i, %i, %i\n", i, j, k);
-                }
+            int j = i + 1;
+            while ((ln1.slope == ln2.slope) && j < n ) {//Check this j<n**************************
+                j++;
+                ncol++;
+                ln2 = lines[j];
+                //printf("Points: %i, %i, %i\n", i, j, k);
             }
         }
+        
     }
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);
