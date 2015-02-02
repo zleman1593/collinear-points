@@ -175,11 +175,11 @@ void find_collinear_improved(point2D* p, int n) {
         for (int i = 0; i < n - 1; i++) {
             struct LnSegment ln1 = lines[i];
             struct LnSegment ln2 = lines[i+1];
-            int j = i + 1;
+            int j = i+1;
             while ((ln1.slope == ln2.slope) && j < n ) {//Check this j<n**************************
+                ln2 = lines[j];
                 j++;
                 ncol++;
-                ln2 = lines[j];
                 //printf("Points: %i, %i, %i\n", i, j, k);
             }
         }
