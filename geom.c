@@ -108,7 +108,7 @@ void find_collinear_straightforward(point2D* p, int n) {
                     //Check to see if third point is colinear with line segement of first two points
                     if (is_colinear(p3.x, p3.y, slope, yIntercept)) {
                         ncol++;
-                        printf("Points: %i, %i, %i\n", i, j, k);
+//                        printf("Points: %i, %i, %i\n", i, j, k);
                     }
                 }
             } else {
@@ -117,7 +117,7 @@ void find_collinear_straightforward(point2D* p, int n) {
                     // Check if the third point has a shared x coordinate
                     if (p[k].x == p1.x) {
                         ncol++;
-                        printf("Vertical line segment. Points: %i, %i, %i \n", i, j, k);
+//                        printf("Vertical line segment. Points: %i, %i, %i \n", i, j, k);
                     }
                 }
             }
@@ -126,19 +126,6 @@ void find_collinear_straightforward(point2D* p, int n) {
     
     printf("find_collinear_straightforward: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
     fflush(stdout);
-}
-
-int factorial(int n) {
-    if (n == 0) {
-        return 1;
-    }
-    int i = 1;
-    int f = 1;
-    while(i <= n){
-        f *= i;
-        i++;
-    }
-    return f;
 }
 
 /* **************************************** */
@@ -179,7 +166,8 @@ void find_collinear_improved(point2D* p, int n) {
         // DEBUG
 //        printf("SORTED ARRAY OF SLOPES\n");
 //        for (int index = 0; index < size; index++) {
-//            printf("%f\n",lines[index].slope);
+//            struct LnSegment ln_t = lines[index];
+//            printf("Points # %i, %i, has slope %f\n", ln_t.index1, ln_t.index2, ln_t.slope);
 //        }
 //        printf("\n");
         
@@ -187,19 +175,19 @@ void find_collinear_improved(point2D* p, int n) {
         // If so they are on the same line
         struct LnSegment ln1;
         struct LnSegment ln2;
-        int b;
+        int b = 0;
         for (int a = 0; a < size - 1; a++) {
-            ln1 = lines[a];
-            ln2 = lines[a + 1];
             b = a + 1;
+            ln1 = lines[a];
+            ln2 = lines[b];
+            
             while (ln1.slope == ln2.slope) {
+                /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
+//                printf("Points #: %i, %i, %i, %i\n", ln1.index1, ln1.index2, ln2.index1,ln2.index2);
+//                printf("Points coordinates: (%f,%f);(%f,%f); (%f,%f); (%f,%f);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
+                
                 b++;
                 ncol++;
-               
-                /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
-                printf("Points #: %i, %i, %i, %i\n", ln1.index1, ln1.index2, ln2.index1,ln2.index2);
-                printf("Points coordinates: (%f,%f);(%f,%f); (%f,%f); (%f,%f);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
-                
                 if (b >= size) {
                     break;
                 }
@@ -207,22 +195,6 @@ void find_collinear_improved(point2D* p, int n) {
             }
             a = b - 1;
         }
-        
-//        struct LnSegment ln1;
-//        struct LnSegment ln2;
-//        int count;
-//        for (int a = 0; a < size - 1; a++) {
-//            count = 0;
-//            ln1 = lines[a];
-//            ln2 = lines[a + 1];
-//            while (ln1.slope == ln2.slope) {
-//                count++;
-//                ln2 = lines[a + count + 1];
-//            }
-//            int numTriplets = factorial(count + 1) / (factorial(3) * factorial((count + 1 - 3)));
-//            ncol += numTriplets;
-//            a += count;
-//        }
     }
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);
