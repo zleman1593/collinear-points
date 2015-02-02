@@ -79,12 +79,12 @@ void print_points() {
 /* ****************************** */
 int main(int argc, char** argv) {
 
-  //read number of points from user
-  if (argc!=2) {
-    printf("usage: viewPoints <nbPoints>\n");
-    exit(1); 
-  }
-    n = 400;//= atoi(argv[1]);
+//  //read number of points from user
+//  if (argc!=2) {
+//    printf("usage: viewPoints <nbPoints>\n");
+//    exit(1); 
+//  }
+    n = 30;//= atoi(argv[1]);
   printf("you entered n=%d\n", n);
   assert(n >0); 
 
