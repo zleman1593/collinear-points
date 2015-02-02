@@ -171,7 +171,8 @@ void find_collinear_improved(point2D* p, int n) {
         // Sort array by slopes
         qsort(lines, n, sizeof(struct LnSegment), cmpfunc);
         
-        // Iterate over array and see if elements that have the same slope share a point
+        // Iterate over array and see if elements  have the same slope.
+        //If so they are on the same line.
         for (int i = 0; i < n - 1; i++) {
             struct LnSegment ln1 = lines[i];
             struct LnSegment ln2 = lines[i+1];
