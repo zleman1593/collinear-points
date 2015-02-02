@@ -11,6 +11,8 @@ struct LnSegment {
     double y1;
     double x2;
     double y2;
+    int pointA;
+    int pointB;
 };
 
 /*Quick sort functions*/
@@ -58,7 +60,7 @@ int is_colinear(double x, double y, double slope, double y_intercept) {
 void find_collinear_straightforward(point2D* p, int n) {
     assert(p);
     int ncol = 0; //nb distinct  collinear triplets
-
+    
     for (int i = 0; i < n; i++) {
         point2D p1 = p[i];
         
@@ -112,7 +114,7 @@ int vertical(point2D a, point2D b) {
 }
 
 /* Returns the slope
-   Returns DBL_MAX if the slope is vertical
+ Returns DBL_MAX if the slope is vertical
  */
 double calc_slope(double x1, double y1, double x2, double y2) {
     double denominator = x1 - x2;
@@ -122,7 +124,7 @@ double calc_slope(double x1, double y1, double x2, double y2) {
     return DBL_MAX;
 }
 
-/* Reutrns the y-intercept
+/* Returns the y-intercept
  */
 double calc_y_intercept(double x, double y, double slope) {
     return y - (slope * x);
@@ -132,25 +134,25 @@ double calc_y_intercept(double x, double y, double slope) {
  */
 int share_point(struct LnSegment l1, struct LnSegment l2) {
     return (l1.x1 == l2.x1 && l1.y1 == l2.y1) ||
-           (l1.x1 == l2.x2 && l1.y1 == l2.y2) ||
-           (l1.x2 == l2.x1 && l1.y2 == l2.y1) ||
-           (l1.x2 == l2.x2 && l1.y2 == l2.y2);
+    (l1.x1 == l2.x2 && l1.y1 == l2.y2) ||
+    (l1.x2 == l2.x1 && l1.y2 == l2.y1) ||
+    (l1.x2 == l2.x2 && l1.y2 == l2.y2);
 }
 
 /* **************************************** */
 /* return all triplets of colinear points as an array using the
- improved algorithm that runs in O(n^2 lg n) time and O(n) memory 
+ improved algorithm that runs in O(n^2 lg n) time and O(n) memory
  */
 void find_collinear_improved(point2D* p, int n) {
     assert(p);
     int ncol = 0; //nb distinct collinear triplets
-
+    
     for (int i = 0; i < n; i++) {
         point2D p1 = p[i];
         
         //Create a lnSegment array for the current point
         struct LnSegment lines[n];
-        
+    
         // Get all possible line segments with point i in them
         for (int j = i + 1; j < n; j++) {
             point2D p2 = p[j];
@@ -163,6 +165,8 @@ void find_collinear_improved(point2D* p, int n) {
                 line.y1 = p1.y;
                 line.x2 = p2.x;
                 line.y2 = p2.y;
+                line.pointA = i;
+                line.pointB = j;
                 // Add lnSegment to array
                 lines[j - 1] = line;
             }
@@ -171,15 +175,22 @@ void find_collinear_improved(point2D* p, int n) {
         // Sort array by slopes
         qsort(lines, n, sizeof(struct LnSegment), cmpfunc);
         
-        // Iterate over array and see if elements that have the same slope share a point
+        // Iterate over array and see if elements  have the same slope.
+        //If so they are on the same line.
         for (int i = 0; i < n - 1; i++) {
             struct LnSegment ln1 = lines[i];
-            struct LnSegment ln2 = lines[i + 1];
-            if (ln1.slope == ln2.slope && share_point(ln1, ln2)) {
+            struct LnSegment ln2 = lines[i+1];
+            int j = i+1;
+            while ((ln1.slope == ln2.slope) && j < n ) {//Check this j<n**************************
+                ln2 = lines[j];
+                j++;
                 ncol++;
-//                printf("Points: %i, %i, %i\n", i, j, k);
+                /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
+                printf("Points #: %i,%i,%i, %i\n", ln1.pointA, ln1.pointB, ln2.pointA,ln2.pointB);
+                printf("Points coordinates: (%f,%f);(%f,%f); (%f,%f); (%f,%f);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
             }
         }
+        
     }
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);
