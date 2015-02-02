@@ -72,7 +72,7 @@ void find_collinear_straightforward(point2D* p, int n) {
                 
                 // If the slope is not vertical
                 if (slope < DBL_MAX) {
-                    for (int k = j + 1; k < n; k++){
+                    for (int k = j + 1; k < n; k++) {
                         if((k != j) && (k != i)){
                             // Get third point
                             point2D p3 = p[k];
