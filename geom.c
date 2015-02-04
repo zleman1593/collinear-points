@@ -3,6 +3,9 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+static const float EPSILON = 0.00001;
 
 /* Line segment representation */
 struct LnSegment {
@@ -15,7 +18,7 @@ struct LnSegment {
     int index2;
 };
 
-/*Quick sort functions*/
+/* Quick sort functions */
 
 int cmpfunc (const void * a, const void * b) {
     /*Type cast*/
@@ -29,6 +32,24 @@ int cmpfunc (const void * a, const void * b) {
     } else {
         return 0;
     }
+}
+
+/* Tests for floating point equality
+ */
+int isEqualFloat(float a, float b) {
+    if (fabsf(a - b) < EPSILON) {
+        return 1;
+    }
+    return 0;
+}
+
+/* Computes n!
+ */
+int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return n * factorial(n - 1);
 }
 
 /* **************************************** */
@@ -55,11 +76,11 @@ int left (point2D a, point2D b, point2D c) {
 }
 
 /* Calculates the slope
- Returns DBL_MAX if the slope is vertical
+ * Returns DBL_MAX if the slope is vertical
  */
 double calc_slope(double x1, double y1, double x2, double y2) {
     double denominator = x1 - x2;
-    if (denominator != 0) {
+    if (!isEqualFloat(denominator, 0)) {
         return (y1 - y2) / denominator;
     }
     return DBL_MAX;
@@ -74,13 +95,7 @@ double calc_y_intercept(double x, double y, double slope) {
 /* Checks if the third point is colinear
  */
 int is_colinear(double x, double y, double slope, double y_intercept) {
-    return y == slope * x +  y_intercept ;
-}
-
-int test_colinear(double x, double y, double x1, double y1, double slope, double y_intercept) {
-    int s = calc_slope(x, y, x1, y1);
-    int y_inter = calc_y_intercept(x, y, s);
-    return s == slope && y_inter == y_intercept;
+    return isEqualFloat(y, slope * x + y_intercept);
 }
 
 /* **************************************** */
@@ -115,7 +130,7 @@ void find_collinear_straightforward(point2D* p, int n) {
                 // Vertical slope
                 for (int k = j + 1; k < n; k++) {
                     // Check if the third point has a shared x coordinate
-                    if (p[k].x == p1.x) {
+                    if (isEqualFloat(p[k].x, p1.x)) {
                         ncol++;
 //                        printf("Vertical line segment. Points: %i, %i, %i \n", i, j, k);
                     }
@@ -126,15 +141,6 @@ void find_collinear_straightforward(point2D* p, int n) {
     
     printf("find_collinear_straightforward: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
     fflush(stdout);
-}
-
-/* Computes n!
- */
-int factorial(int n) {
-    if (n == 0) {
-        return 1;
-    }
-    return n * factorial(n - 1);
 }
 
 /* **************************************** */
@@ -211,7 +217,7 @@ void find_collinear_improved(point2D* p, int n) {
             int count = 1;
             ln1 = lines[a];
             ln2 = lines[a + 1];
-            while (ln1.slope == ln2.slope) {
+            while (isEqualFloat(ln1.slope, ln2.slope)) {
                 count++;
                 if (a + count >= size) {
                     break;
