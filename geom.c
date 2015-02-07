@@ -111,9 +111,13 @@ void find_collinear_straightforward(point2D* p, int n) {
         
         for (int j = i + 1; j < n - 1; j++) {
             point2D p2 = p[j];
-
+           
+           
+            
             double slope = calc_slope(p1.x, p1.y, p2.x, p2.y);
             double yIntercept = calc_y_intercept(p1.x, p1.y, slope);
+         
+            
             
             if (slope < DBL_MAX) {
                 // If the slope is not vertical
@@ -127,13 +131,19 @@ void find_collinear_straightforward(point2D* p, int n) {
                     }
                 }
             } else {
+                if((p1.x == p2.x) && (p1.y == p2.y)){
+                    ncol = ncol + (n-2);
+                }else{
                 // Vertical slope
                 for (int k = j + 1; k < n; k++) {
                     // Check if the third point has a shared x coordinate
+                   
                     if (isEqualFloat(p[k].x, p1.x)) {
                         ncol++;
 //                        printf("Vertical line segment. Points: %i, %i, %i \n", i, j, k);
                     }
+                    
+                }
                 }
             }
         }
@@ -172,7 +182,12 @@ void find_collinear_improved(point2D* p, int n) {
             ln.index1 = i;
             ln.index2 = j;
             // Add lnSegment to array
-            lines[j - i - 1] = ln;
+            if((p1.x == p2.x) && (p1.y == p2.y)){
+   
+                ncol = ncol + (n-2);
+            } else{
+                        lines[j - i - 1] = ln;
+            }
         }
         
         // Sort array by slopes

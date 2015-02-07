@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 //    printf("usage: viewPoints <nbPoints>\n");
 //    exit(1); 
 //  }
-    n = 500;//= atoi(argv[1]);
+    n = 1000;//= atoi(argv[1]);
   printf("you entered n=%d\n", n);
   assert(n >0); 
 
