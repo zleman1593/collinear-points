@@ -111,13 +111,9 @@ void find_collinear_straightforward(point2D* p, int n) {
         
         for (int j = i + 1; j < n - 1; j++) {
             point2D p2 = p[j];
-            
-            
-            
+    
             double slope = calc_slope(p1.x, p1.y, p2.x, p2.y);
             double yIntercept = calc_y_intercept(p1.x, p1.y, slope);
-            
-            
             
             if (slope < DBL_MAX) {
                 // If the slope is not vertical
@@ -130,18 +126,16 @@ void find_collinear_straightforward(point2D* p, int n) {
                 }
             } else {
                 //Check to see if the two points not only share the x coordinate but also y coordinate. Indicates they are the same point. We count all these triplets.
-                if((p1.x == p2.x) && (p1.y == p2.y)){
+                if (isEqualFloat(p1.x, p2.x) && isEqualFloat(p1.y, p2.y)) {
                     //Create (n-j)-1 more triplets  with points i and j and every point after j in the initial list
-                    ncol = ncol + (n-j)-1;
-                }else{
+                    ncol = ncol + (n - j) - 1;
+                } else {
                     // Else, the two points are different and have a vertical slope
                     for (int k = j + 1; k < n; k++) {
                         // Check if the third point has a shared x coordinate
                         if (isEqualFloat(p[k].x, p1.x)) {
                             ncol++;
-                            
                         }
-                        
                     }
                 }
             }
@@ -182,9 +176,9 @@ void find_collinear_improved(point2D* p, int n) {
             ln.index2 = j;
             
             // Add lnSegment to array
-            if((p1.x == p2.x) && (p1.y == p2.y)){
+            if(isEqualFloat(p1.x, p2.x) && isEqualFloat(p1.y, p2.y)) {
                 //Check to see if the two points not only share the x coordinate but also y coordinate. Indicates they are the same point. We count all these triplets.
-                ncol = ncol + (n-j)-1;
+                ncol = ncol + (n - j) - 1;
             } else{//Else add to array
                 lines[j - i - 1] = ln;
             }
@@ -200,6 +194,7 @@ void find_collinear_improved(point2D* p, int n) {
             int count = 1;
             ln1 = lines[a];
             ln2 = lines[a + 1];
+            
             while (isEqualFloat(ln1.slope, ln2.slope)) {
                 count++;
                 if (a + count >= size) {
@@ -234,11 +229,6 @@ void find_collinear_improved(point2D* p, int n) {
          
          }
          }
-         
-         
-         
-         
-         
          */
         
     }
