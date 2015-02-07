@@ -111,28 +111,37 @@ void find_collinear_straightforward(point2D* p, int n) {
         
         for (int j = i + 1; j < n - 1; j++) {
             point2D p2 = p[j];
-
+            
+            
+            
             double slope = calc_slope(p1.x, p1.y, p2.x, p2.y);
             double yIntercept = calc_y_intercept(p1.x, p1.y, slope);
+            
+            
             
             if (slope < DBL_MAX) {
                 // If the slope is not vertical
                 for (int k = j + 1; k < n; k++) {
                     point2D p3 = p[k];
-                    
                     //Check to see if third point is colinear with line segement of first two points
                     if (is_colinear(p3.x, p3.y, slope, yIntercept)) {
                         ncol++;
-//                        printf("Points: %i, %i, %i\n", i, j, k);
                     }
                 }
             } else {
-                // Vertical slope
-                for (int k = j + 1; k < n; k++) {
-                    // Check if the third point has a shared x coordinate
-                    if (isEqualFloat(p[k].x, p1.x)) {
-                        ncol++;
-//                        printf("Vertical line segment. Points: %i, %i, %i \n", i, j, k);
+                //Check to see if the two points not only share the x coordinate but also y coordinate. Indicates they are the same point. We count all these triplets.
+                if((p1.x == p2.x) && (p1.y == p2.y)){
+                    //Create (n-j)-1 more triplets  with points i and j and every point after j in the initial list
+                    ncol = ncol + (n-j)-1;
+                }else{
+                    // Else, the two points are different and have a vertical slope
+                    for (int k = j + 1; k < n; k++) {
+                        // Check if the third point has a shared x coordinate
+                        if (isEqualFloat(p[k].x, p1.x)) {
+                            ncol++;
+                            
+                        }
+                        
                     }
                 }
             }
@@ -157,7 +166,7 @@ void find_collinear_improved(point2D* p, int n) {
         // Create a lnSegment array for the current point
         int size = n - i - 1;
         struct LnSegment lines[size];
-    
+        
         // Get all possible line segments with point i in them
         for (int j = i + 1; j < n; j++) {
             point2D p2 = p[j];
@@ -171,44 +180,18 @@ void find_collinear_improved(point2D* p, int n) {
             ln.y2 = p2.y;
             ln.index1 = i;
             ln.index2 = j;
+            
             // Add lnSegment to array
-            lines[j - i - 1] = ln;
+            if((p1.x == p2.x) && (p1.y == p2.y)){
+                //Check to see if the two points not only share the x coordinate but also y coordinate. Indicates they are the same point. We count all these triplets.
+                ncol = ncol + (n-j)-1;
+            } else{//Else add to array
+                lines[j - i - 1] = ln;
+            }
         }
         
         // Sort array by slopes
         qsort(lines, size, sizeof(struct LnSegment), cmpfunc);
-        
-        // DEBUG
-//        printf("SORTED ARRAY OF SLOPES\n");
-//        for (int index = 0; index < size; index++) {
-//            struct LnSegment ln_t = lines[index];
-//            printf("Points # %i, %i, has slope %f\n", ln_t.index1, ln_t.index2, ln_t.slope);
-//        }
-//        printf("\n");
-        
-        // Iterate over array and see if elements have the same slope
-        // If so they are on the same line
-//        struct LnSegment ln1;
-//        struct LnSegment ln2;
-//        int b = 0;
-//        for (int a = 0; a < size - 1; a++) {
-//            b = a + 1;
-//            ln1 = lines[a];
-//            ln2 = lines[b];
-//            
-//            while (ln1.slope == ln2.slope) {
-//                /*Expected output is four points. Two should have the same number. Three unique points for a colinear triplet*/
-//                printf("Points #: %i, %i, %i, %i\n", ln1.index1, ln1.index2, ln2.index1,ln2.index2);
-//                printf("Points coordinates: (%f,%f);(%f,%f); (%f,%f); (%f,%f);\n", ln1.x1, ln1.y1, ln1.x2,ln1.y2,ln2.x1,ln2.y1, ln2.x2, ln2.y2);
-//                
-//                b++;
-//                ncol++;
-//                if (b >= size) {
-//                    break;
-//                }
-//                ln2 = lines[b];
-//            }
-//        }
         
         struct LnSegment ln1;
         struct LnSegment ln2;
@@ -236,6 +219,28 @@ void find_collinear_improved(point2D* p, int n) {
             // Move index a along
             a = a + count - 1;
         }
+        
+        /*
+         //Proposed for making the points
+         for (int i = 0; i < size - 1; i++) {
+         struct LnSegment ln1 = lines[i];
+         struct LnSegment ln2 = lines[i+1];
+         int j = i+1;
+         while (isEqualFloat(ln1.slope, ln2.slope) ) {//Check this j<n**************************
+         ln2 = lines[j];
+         j++;
+         ncol++;
+         //Expected output is four points. Two should have the same number. Three unique points for a colinear triplet
+         
+         }
+         }
+         
+         
+         
+         
+         
+         */
+        
     }
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);
