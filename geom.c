@@ -7,23 +7,12 @@
 
 static const float EPSILON = 0.00001;
 
-/* Line segment representation */
-struct LnSegment {
-    double slope;
-    double x1;
-    double y1;
-    double x2;
-    double y2;
-    int index1;
-    int index2;
-};
-
 /* Quick sort functions */
 
 int cmpfunc (const void * a, const void * b) {
     /*Type cast*/
-    struct LnSegment * x = (struct LnSegment*) a;
-    struct LnSegment * y = (struct LnSegment*) b;
+    lnSegment * x = (lnSegment*) a;
+    lnSegment * y = (lnSegment*) b;
     
     if (x->slope < y->slope) {
         return -1;
@@ -102,7 +91,7 @@ int is_colinear(double x, double y, double slope, double y_intercept) {
 /* return all triplets of colinear points as an array using the
  straightforward algorithm that runs in cubic time
  */
-void find_collinear_straightforward(point2D* p, int n) {
+void find_collinear_straightforward(point2D* p, int n, triplet* t) {
     assert(p);
     int ncol = 0; //nb distinct  collinear triplets
     
@@ -132,8 +121,15 @@ void find_collinear_straightforward(point2D* p, int n) {
                 } else {
                     // Else, the two points are different and have a vertical slope
                     for (int k = j + 1; k < n; k++) {
+                        point2D p3 = p[k];
+                        
                         // Check if the third point has a shared x coordinate
-                        if (isEqualFloat(p[k].x, p1.x)) {
+                        if (isEqualFloat(p3.x, p1.x)) {
+                            triplet tri;
+                            tri.a = p1;
+                            tri.b = p2;
+                            tri.c = p3;
+                            t[ncol] = tri;
                             ncol++;
                         }
                     }
@@ -150,7 +146,7 @@ void find_collinear_straightforward(point2D* p, int n) {
 /* return all triplets of colinear points as an array using the
  improved algorithm that runs in O(n^2 lg n) time and O(n) memory
  */
-void find_collinear_improved(point2D* p, int n) {
+void find_collinear_improved(point2D* p, int n, triplet* t) {
     assert(p);
     int ncol = 0; //nb distinct collinear triplets
     
@@ -159,19 +155,19 @@ void find_collinear_improved(point2D* p, int n) {
         
         // Create a lnSegment array for the current point
         int size = n - i - 1;
-        struct LnSegment lines[size];
+        lnSegment lines[size];
         
         // Get all possible line segments with point i in them
         for (int j = i + 1; j < n; j++) {
             point2D p2 = p[j];
             
             //Create struct lnSegment with two points (i and j) and current slope
-            struct LnSegment ln;
+            lnSegment ln;
             ln.slope = calc_slope(p1.x, p1.y, p2.x, p2.y);
-            ln.x1 = p1.x;
-            ln.y1 = p1.y;
-            ln.x2 = p2.x;
-            ln.y2 = p2.y;
+            ln.first.x = p1.x;
+            ln.first.y = p1.y;
+            ln.second.x = p2.x;
+            ln.second.y = p2.y;
             ln.index1 = i;
             ln.index2 = j;
             
@@ -179,16 +175,16 @@ void find_collinear_improved(point2D* p, int n) {
             if(isEqualFloat(p1.x, p2.x) && isEqualFloat(p1.y, p2.y)) {
                 //Check to see if the two points not only share the x coordinate but also y coordinate. Indicates they are the same point. We count all these triplets.
                 ncol = ncol + (n - j) - 1;
-            } else{//Else add to array
+            } else {
+                // Add to array
                 lines[j - i - 1] = ln;
             }
         }
         
         // Sort array by slopes
-        qsort(lines, size, sizeof(struct LnSegment), cmpfunc);
+        qsort(lines, size, sizeof(lnSegment), cmpfunc);
         
-        struct LnSegment ln1;
-        struct LnSegment ln2;
+        lnSegment ln1, ln2;
         for (int a = 0; a < size - 1; a++) {
             // Number of slopes with the same value
             int count = 1;
@@ -230,7 +226,6 @@ void find_collinear_improved(point2D* p, int n) {
          }
          }
          */
-        
     }
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);

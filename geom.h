@@ -3,14 +3,19 @@
 
 
 typedef struct _point2d {
-  int x,y; 
+    int x,y;
 } point2D;
 
- typedef struct _lnSegment {
-     point2D first, second;
-     double slope;
+typedef struct _lnSegment {
+    point2D first, second;
+    double slope;
+    // For debugging
+    int index1, index2;
  } lnSegment;
 
+typedef struct _triplet {
+    point2D a, b, c;
+} triplet;
 
 
 
@@ -36,15 +41,13 @@ double calc_y_intercept(double x, double y, double slope);
 /* return all triplets of colinear points as an array using the
    straightforward algorithm that runs in cubic time 
 */
-void find_collinear_straightforward(point2D* p, int n);
-
+void find_collinear_straightforward(point2D* p, int n, triplet* t);
 
 
 /* return all triplets of colinear points as an array using the
    an improved algorithm 
 */
-void find_collinear_improved(point2D* p, int n);
-
+void find_collinear_improved(point2D* p, int n, triplet* t);
 
 #endif
 
