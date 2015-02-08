@@ -9,8 +9,6 @@ typedef struct _point2d {
 typedef struct _lnSegment {
     point2D first, second;
     double slope;
-    // For debugging
-    int index1, index2;
  } lnSegment;
 
 typedef struct _triplet {
@@ -32,11 +30,19 @@ int collinear(point2D p, point2D q, point2D r);
 /* return 1 if c is  strictly left of ab; 0 otherwise */
 int left (point2D a, point2D b, point2D c); 
 
+/* Deletes the duplicate points in the array*/
+int deleteDuplicates(point2D* array, int size);
+
+void debugDeleteDuplicates(point2D* array, int size);
+
 /* calculates the slope returns DBL_MAX if the slope is vertical */
 double calc_slope(double x1, double y1, double x2, double y2);
 
 /* calculates the y-intercept */
 double calc_y_intercept(double x, double y, double slope);
+
+/* Check if two floating or double points are within range of EPSILON*/
+int isEqualFloat(float a, float b);
 
 /* return all triplets of colinear points as an array using the
    straightforward algorithm that runs in cubic time 

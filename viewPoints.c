@@ -85,54 +85,59 @@ int main(int argc, char** argv) {
 //    exit(1); 
 //  }
     n = 300;//= atoi(argv[1]);
-  printf("you entered n=%d\n", n);
-  assert(n >0); 
+    printf("you entered n=%d\n", n);
+    assert(n > 0);
+    
+    //allocate global arrays of n points
+    points = (point2D*)malloc(n*sizeof(point2D));
+    assert(points);
+    initialize_points_random();
+    //print_points();
 
-  //allocate global arrays of n points 
-  points = (point2D*)malloc(n*sizeof(point2D));
-  assert(points); 
-  initialize_points_random();
-  //print_points();
+    Rtimer rt1;
+    rt_start(rt1);
+    
+    // Eliminate duplicate points
+    n = deleteDuplicates(points, n);
+    
+    triplet triplets[n * n];
+    find_collinear_straightforward(points,n, triplets);
+    rt_stop(rt1);
+    char buf [1024];
+    rt_sprint(buf,rt1);
+    printf("finding all triplets of collinear points, n=%d, straightforward alg:  %s\n\n", n, buf);
+    fflush(stdout);
 
-  Rtimer rt1; 
-  rt_start(rt1); 
-  find_collinear_straightforward(points,n); 
-  rt_stop(rt1); 
-  char buf [1024]; 
-  rt_sprint(buf,rt1);
-  printf("finding all triplets of collinear points, n=%d, straightforward alg:  %s\n\n", n, buf);
-  fflush(stdout); 
+    Rtimer rt2;
+    rt_start(rt2);
+    triplet tris[n * n];
+    find_collinear_improved(points,n, tris);
+    rt_stop(rt2);
+    rt_sprint(buf,rt2);
+    printf("finding all triplets of collinear points, n=%d, improved algo:  %s\n\n", n, buf);
+    fflush(stdout);
+      
 
-  Rtimer rt2; 
-  rt_start(rt2); 
-  find_collinear_improved(points,n);
-  rt_stop(rt2); 
-  rt_sprint(buf,rt2);
-  printf("finding all triplets of collinear points, n=%d, improved algo:  %s\n\n", n, buf);
-  fflush(stdout); 
-  
+    /* initialize GLUT  */
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(WINDOWSIZE, WINDOWSIZE);
+    glutInitWindowPosition(100,100);
+    glutCreateWindow(argv[0]);
+    
+    /* register callback functions */
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keypress);
 
-  /* initialize GLUT  */
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  glutInitWindowSize(WINDOWSIZE, WINDOWSIZE);
-  glutInitWindowPosition(100,100);
-  glutCreateWindow(argv[0]);
-
-  /* register callback functions */
-  glutDisplayFunc(display); 
-  glutKeyboardFunc(keypress);
-
-  /* init GL */
-  /* set background color black*/
-  glClearColor(0, 0, 0, 0);   
-  /* here we can enable depth testing and double buffering and so
-     on */
-
-  
-  /* give control to event handler */
-  glutMainLoop();
-  return 0;
+    /* init GL */
+    /* set background color black*/
+    glClearColor(0, 0, 0, 0);
+    /* here we can enable depth testing and double buffering and so
+        on */
+      
+    /* give control to event handler */
+    glutMainLoop();
+    return 0;
 }
 
 
