@@ -28,6 +28,9 @@ int cmpfunc(const void * a, const void * b) {
 /* Tests for floating point equality
  */
 int isEqualFloat(float a, float b) {
+    if (a >= DBL_MAX && b >= DBL_MAX) {
+        return 1;
+    }
     if (fabsf(a - b) < EPSILON) {
         return 1;
     }
@@ -59,22 +62,12 @@ int deleteDuplicates(point2D* array, int size) {
         }
     }
     
-    int newSize = index + 1;
-    
     // Copy array
-    for (int n = 0; n < newSize; n++) {
+    for (int n = 0; n < index; n++) {
         array[n] = newArray[n];
     }
     
-    return newSize;
-}
-
-void debugDeleteDuplicates(point2D* array, int size) {
-    printf("size: %i\n", size);
-//    for (int i = 0; i < size; i++) {
-//        point2D p = array[i];
-//        printf("x: %d, y: %d\n", p.x, p.y);
-//    }
+    return index;
 }
 
 /* **************************************** */
@@ -135,7 +128,7 @@ void add_triplet(triplet* array, int index, point2D p_a, point2D p_b, point2D p_
 /* return all triplets of colinear points as an array using the
  straightforward algorithm that runs in cubic time
  */
-void find_collinear_straightforward(point2D* p, int n, triplet* t) {
+int find_collinear_straightforward(point2D* p, int n, triplet* t) {
     assert(p);
     int ncol = 0; //nb distinct  collinear triplets
     
@@ -176,13 +169,15 @@ void find_collinear_straightforward(point2D* p, int n, triplet* t) {
     
     printf("find_collinear_straightforward: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n*(long int)(n-1)*(long int)(n-2))/6);
     fflush(stdout);
+    
+    return ncol;
 }
 
 /* **************************************** */
 /* return all triplets of colinear points as an array using the
  improved algorithm that runs in O(n^2 lg n) time and O(n) memory
  */
-void find_collinear_improved(point2D* p, int n, triplet* t) {
+int find_collinear_improved(point2D* p, int n, triplet* t) {
     assert(p);
     int ncol = 0; //nb distinct collinear triplets
     
@@ -238,4 +233,6 @@ void find_collinear_improved(point2D* p, int n, triplet* t) {
     
     printf("find_collinear_improved: total %d distinct collinear triplets (out of max %ld triplets)\n", ncol, (long int) ((long int)n * (long int)(n-1) * (long int)(n - 2)) / 6);
     fflush(stdout);
+    
+    return ncol;
 }

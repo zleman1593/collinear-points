@@ -39,7 +39,7 @@ GLint fillmode = 0;
 void display(void);
 void keypress(unsigned char key, int x, int y);
 void main_menu(int value);
-
+void printTriplets(triplet* array, int size);
 
 
 /* global variables */
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 //    printf("usage: viewPoints <nbPoints>\n");
 //    exit(1); 
 //  }
-    n = 300;//= atoi(argv[1]);
+    n = 1000;//= atoi(argv[1]);
     printf("you entered n=%d\n", n);
     assert(n > 0);
     
@@ -101,7 +101,10 @@ int main(int argc, char** argv) {
     n = deleteDuplicates(points, n);
     
     triplet triplets[n * n];
-    find_collinear_straightforward(points,n, triplets);
+    int numTriplets = find_collinear_straightforward(points, n, triplets);
+    
+//    printTriplets(triplets, numTriplets);
+    
     rt_stop(rt1);
     char buf [1024];
     rt_sprint(buf,rt1);
@@ -111,7 +114,10 @@ int main(int argc, char** argv) {
     Rtimer rt2;
     rt_start(rt2);
     triplet tris[n * n];
-    find_collinear_improved(points,n, tris);
+    int numTris = find_collinear_improved(points, n, tris);
+    
+//    printTriplets(tris, numTris);
+
     rt_stop(rt2);
     rt_sprint(buf,rt2);
     printf("finding all triplets of collinear points, n=%d, improved algo:  %s\n\n", n, buf);
@@ -141,6 +147,19 @@ int main(int argc, char** argv) {
 }
 
 
+/* Prints out the coordinates of the triplets
+ */
+void printTriplets(triplet* array, int size) {
+    for (int i = 0; i < size; i++) {
+        triplet t = array[i];
+        point2D a = t.a;
+        point2D b = t.b;
+        point2D c = t.c;
+        printf("first: (%d, %d), second: (%d, %d), third: (%d, %d)\n",
+              a.x, a.y, b.x, b.y, c.x, c.y);
+    }
+}
+
 /* ****************************** */
 /* draw the array of points stored in global variable points[] 
    each point is drawn as a small square 
@@ -168,7 +187,6 @@ void draw_points(){
   }
 
 }
-
 
 
 /* ****************************** */
