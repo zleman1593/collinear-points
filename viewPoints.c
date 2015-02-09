@@ -1,4 +1,6 @@
-/* view1.c 
+/* By Ivy Xing and Zack Leman */
+
+/* view1.c
 
 Laura Toma
 
@@ -34,20 +36,18 @@ GLfloat cyan[3] = {0.0, 1.0, 1.0};
 GLint fillmode = 0;
 
 
-
 /* forward declarations of functions */
 void display(void);
 void keypress(unsigned char key, int x, int y);
 void main_menu(int value);
 void printTriplets(triplet* array, int size);
-
+int factorial(int n);
 
 /* global variables */
-const int WINDOWSIZE = 500; 
+const int WINDOWSIZE = 500;
+const int MAX_NUM_TRIPLETS = 5000;
 point2D*  points;
-int n;  
-
-
+int n;
 
 /* ****************************** */
 /* initialize  the array of points stored in global variable points[] with random points */
@@ -56,7 +56,7 @@ void initialize_points_random() {
   assert(points); 
   
   int i; 
-  for (i=0; i<n; i++) {
+  for (i = 0; i < n; i++) {
     points[i].x = random() % WINDOWSIZE; 
     points[i].y = random() % WINDOWSIZE;
   }
@@ -68,23 +68,23 @@ void print_points() {
   assert(points); 
   int i; 
   printf("points: ");
-  for (i=0; i<n; i++) {
+  for (i = 0; i < n; i++) {
     printf("[%3d,%3d] ", points[i].x, points[i].y);
   }
   printf("\n");
   fflush(stdout);  //flush stdout, weird sync happens when using gl thread
 }
 
-
 /* ****************************** */
 int main(int argc, char** argv) {
 
-//  //read number of points from user
-//  if (argc!=2) {
-//    printf("usage: viewPoints <nbPoints>\n");
-//    exit(1); 
-//  }
-    n = 1000;//= atoi(argv[1]);
+    //read number of points from user
+    if (argc != 2) {
+      printf("usage: viewPoints <nbPoints>\n");
+      exit(1);
+    }
+    
+    n = atoi(argv[1]);
     printf("you entered n=%d\n", n);
     assert(n > 0);
     
@@ -100,10 +100,10 @@ int main(int argc, char** argv) {
     // Eliminate duplicate points
     n = deleteDuplicates(points, n);
     
-    triplet triplets[n * n];
+    triplet triplets[MAX_NUM_TRIPLETS];
     int numTriplets = find_collinear_straightforward(points, n, triplets);
     
-//    printTriplets(triplets, numTriplets);
+    printTriplets(triplets, numTriplets);
     
     rt_stop(rt1);
     char buf [1024];
@@ -113,10 +113,10 @@ int main(int argc, char** argv) {
 
     Rtimer rt2;
     rt_start(rt2);
-    triplet tris[n * n];
+    triplet tris[MAX_NUM_TRIPLETS];
     int numTris = find_collinear_improved(points, n, tris);
     
-//    printTriplets(tris, numTris);
+    printTriplets(tris, numTris);
 
     rt_stop(rt2);
     rt_sprint(buf,rt2);

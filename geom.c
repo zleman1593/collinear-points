@@ -1,3 +1,5 @@
+/* By Ivy Xing and Zack Leman */
+
 #include "geom.h"
 #include <float.h>
 #include <assert.h>
@@ -205,7 +207,7 @@ int find_collinear_improved(point2D* p, int n, triplet* t) {
         qsort(lines, size, sizeof(lnSegment), cmpfunc);
 
         // Count triplets
-        for (int a = 0; a < size; a++) {
+        for (int a = 0; a < size - 1; a++) {
             lnSegment ln1 = lines[a];
             lnSegment ln2 = lines[a + 1];
             int b = a + 1;
