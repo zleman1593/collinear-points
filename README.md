@@ -13,5 +13,5 @@ Improved Algorithm:
 4. This takes O(n^2 * lg(n)) time and O(n) space.
 
 Testing:
-1. The constant MAX_NUM_TRIPLETS at the top is the maximum size of the array that stores triplets. 
+1. In ViewPoints.c, the constant MAX_NUM_TRIPLETS at the top is the maximum size of the array that stores triplets. 
 2. If n is large, you will need to modify this number to avoid overflow (maximum number of triplets for n is n choose 3).
